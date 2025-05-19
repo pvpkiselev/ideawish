@@ -4,25 +4,51 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "next build",
+    "build": "prisma generate --schema=./src/shared/lib/prisma/schema.prisma && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint --ext .ts,.tsx .",
+    "pmd": "prisma migrate dev",
+    "pgc": "prisma generate",
+    "types": "tsc --noEmit --project ./tsconfig.json",
+    "prettify": "prettier --log-level warn --cache --write '{src/**/*,*}.{ts,tsx,js,json,yml,scss}' !**/{node_modules,dist}/**/*",
+    "prepare": "husky"
+  },
+  "prisma": {
+    "schema": "./prisma/schema.prisma"
   },
   "dependencies": {
+    "@prisma/client": "^6.8.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lodash": "^4.17.21",
+    "lucide-react": "^0.511.0",
+    "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "next": "15.3.2"
+    "superjson": "^2.2.2",
+    "tailwind-merge": "^3.3.0",
+    "ts-node": "^10.9.2",
+    "zod": "^3.24.4"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@next/eslint-plugin-next": "^15.3.2",
+    "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
-    "@eslint/eslintrc": "^3"
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.5.3",
+    "prettier-plugin-tailwindcss": "^0.6.11",
+    "prisma": "^6.8.2",
+    "tailwindcss": "^4",
+    "tw-animate-css": "^1.3.0",
+    "typescript": "^5"
   },
   "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af"
 }
