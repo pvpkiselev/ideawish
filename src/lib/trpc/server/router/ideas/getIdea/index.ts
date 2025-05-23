@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-import { trpcProcedure } from '@/server/trpc'
+import { trpcProcedure } from '@/lib/trpc/server/trpc'
 
 import { zGetIdeaTrpcInput } from './input'
 

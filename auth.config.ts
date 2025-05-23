@@ -4,7 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials'
 import Github from 'next-auth/providers/github'
 import Google from 'next-auth/providers/google'
 
-import { prisma } from '@/lib/prisma-client'
+import { prisma } from '@/lib/trpc/prismaClient'
 
 import { randomUUID } from 'crypto'
 

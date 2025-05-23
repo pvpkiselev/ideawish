@@ -4,18 +4,18 @@ import Link from 'next/link'
 import InfiniteScroll from 'react-infinite-scroller'
 
 import { useLayoutContentRef } from '@/context/LayoutContentRefContext'
-import { trpc } from '@/lib/TrpcProvider'
-import { TrpcRouterOutput } from '@/server/router'
+import { trpc } from '@/lib/trpc/client'
+import { TrpcRouterOutput } from '@/lib/trpc/server/router'
 
 interface AllIdeasProps {
-  initialIdeas: TrpcRouterOutput['getIdeas']
+  initialIdeas: TrpcRouterOutput['ideas']['getIdeas']
 }
 
 export default function AllIdeas({ initialIdeas }: AllIdeasProps) {
   const layoutContentElRef = useLayoutContentRef()
 
   const { data, error, isLoading, isError, hasNextPage, fetchNextPage, isFetchingNextPage, isRefetching } =
-    trpc.getIdeas.useInfiniteQuery(
+    trpc.ideas.getIdeas.useInfiniteQuery(
       {
         search: '',
       },

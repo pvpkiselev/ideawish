@@ -1,4 +1,4 @@
-import { trpcProcedure } from '@/server/trpc'
+import { trpcProcedure } from '@/lib/trpc/server/trpc'
 
 import { zCreateIdeaTrpcInput } from './input'
 

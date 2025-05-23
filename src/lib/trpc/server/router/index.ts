@@ -2,14 +2,12 @@ import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 
 import { createTrpcRouter } from '../trpc'
 
-import { createIdeaTrpcRoute } from './ideas/createIdea'
-import { getIdeaTrpcRoute } from './ideas/getIdea'
-import { getIdeasTrpcRoute } from './ideas/getIdeas'
+import { ideasRouter } from './ideas'
+import { utilsHealthRouter } from './utils'
 
 export const trpcRouter = createTrpcRouter({
-  getIdeas: getIdeasTrpcRoute,
-  getIdea: getIdeaTrpcRoute,
-  createIdea: createIdeaTrpcRoute,
+  ideas: ideasRouter,
+  utils: utilsHealthRouter,
 })
 
 export type TrpcRouter = typeof trpcRouter

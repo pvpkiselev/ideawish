@@ -1,12 +1,12 @@
 'use client'
 
 import LayoutContentWrapper from '@/components/LayoutContentWrapper'
-import { TrpcProvider } from '@/lib/TrpcProvider'
+import { TRPCProvider } from '@/lib/trpc/TRPCProvider'
 
 export default function Providers({ children }: { children: React.ReactNode }) {
   return (
-    <TrpcProvider>
+    <TRPCProvider>
       <LayoutContentWrapper>{children}</LayoutContentWrapper>
-    </TrpcProvider>
+    </TRPCProvider>
   )
 }

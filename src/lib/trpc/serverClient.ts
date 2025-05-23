@@ -1,21 +1,34 @@
-import type { TrpcRouterInput } from '@/server/router'
-import { trpcRouter } from '@/server/router'
+import type { TrpcRouterInput, TrpcRouterOutput } from '@/lib/trpc/server/router'
+import { trpcRouter } from '@/lib/trpc/server/router'
 
-import { getServerContext } from '../serverCtx'
+import { TrpcContext } from './server/trpc'
+import { getServerContext } from './serverContext'
 
 export const serverClient = {
   ideas: {
-    getIdeas: async (input: TrpcRouterInput['getIdeas']) => {
-      const ctx = await getServerContext()
-      return trpcRouter.createCaller(ctx).getIdeas(input)
+    getIdeas: (input: TrpcRouterInput['ideas']['getIdeas']): Promise<TrpcRouterOutput['ideas']['getIdeas']> => {
+      return withServerContext(async (ctx) => trpcRouter.createCaller(ctx).ideas.getIdeas(input))
     },
-    getIdea: async (input: TrpcRouterInput['getIdea']) => {
-      const ctx = await getServerContext()
-      return trpcRouter.createCaller(ctx).getIdea(input)
+    getIdea: (input: TrpcRouterInput['ideas']['getIdea']): Promise<TrpcRouterOutput['ideas']['getIdea']> => {
+      return withServerContext(async (ctx) => trpcRouter.createCaller(ctx).ideas.getIdea(input))
     },
-    createIdea: async (input: TrpcRouterInput['createIdea']) => {
-      const ctx = await getServerContext()
-      return trpcRouter.createCaller(ctx).createIdea(input)
+    createIdea: (input: TrpcRouterInput['ideas']['createIdea']): Promise<TrpcRouterOutput['ideas']['createIdea']> => {
+      return withServerContext(async (ctx) => trpcRouter.createCaller(ctx).ideas.createIdea(input))
     },
   },
+
+  utils: {
+    health: (): Promise<TrpcRouterOutput['utils']['health']> => {
+      return withServerContext(async (ctx) => trpcRouter.createCaller(ctx).utils.health())
+    },
+  },
+}
+
+async function withServerContext<T>(fn: (ctx: TrpcContext) => Promise<T>): Promise<T> {
+  const ctx = await getServerContext()
+  try {
+    return await fn(ctx)
+  } finally {
+    await ctx.stop?.()
+  }
 }
