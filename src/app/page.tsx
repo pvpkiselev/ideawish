@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import AllIdeas from '@/components/AllIdeas'
+import AllIdeas from '@/components/ideas/AllIdeas'
 import { serverClient } from '@/lib/trpc/serverClient'
 
 export default async function Home() {
