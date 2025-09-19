@@ -1,12 +1,8 @@
-import { trpcProcedure } from '@/lib/trpc/server/trpc'
+import { protectedProcedure } from '../../../trpc'
 
-import { zCreateIdeaTrpcInput } from './input'
+import { zCreateIdeaInput } from './input'
 
-export const createIdeaTrpcRoute = trpcProcedure.input(zCreateIdeaTrpcInput).mutation(async ({ ctx, input }) => {
-  if (!ctx.me) {
-    throw Error('UNAUTHORIZED')
-  }
-
+export const createIdeaRoute = protectedProcedure.input(zCreateIdeaInput).mutation(async ({ ctx, input }) => {
   const exIdea = await ctx.prisma.idea.findUnique({
     where: {
       nick: input.nick,
@@ -18,7 +14,15 @@ export const createIdeaTrpcRoute = trpcProcedure.input(zCreateIdeaTrpcInput).mut
   }
 
   await ctx.prisma.idea.create({
-    data: { ...input, authorId: ctx.me.id },
+    data: {
+      name: input.name,
+      nick: input.nick,
+      description: input.description,
+      text: input.text,
+      author: {
+        connect: { id: ctx.user?.id },
+      },
+    },
   })
 
   return true

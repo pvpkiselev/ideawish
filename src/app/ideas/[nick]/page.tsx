@@ -1,9 +1,11 @@
-import { serverClient } from '@/lib/trpc/serverClient'
+import { createCaller } from '@/lib/trpc/server/caller'
 
-export default async function Idea({ params }: { params: Promise<{ nick: string }> }) {
+export default async function IdeaPage({ params }: { params: Promise<{ nick: string }> }) {
   const { nick } = await params
 
-  const { idea } = await serverClient.ideas.getIdea({
+  const serverApi = await createCaller()
+
+  const { idea } = await serverApi.ideas.getIdea({
     nick,
   })
 

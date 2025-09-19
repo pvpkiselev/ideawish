@@ -1,5 +1,5 @@
-import { createTrpcRouter, trpcProcedure } from '../../trpc'
+import { createAppRouter, publicProcedure } from '../../trpc'
 
-export const utilsHealthRouter = createTrpcRouter({
-  health: trpcProcedure.query(() => 'OK'),
+export const utilsHealthRouter = createAppRouter({
+  health: publicProcedure.query(() => 'OK'),
 })

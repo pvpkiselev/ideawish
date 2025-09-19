@@ -1,15 +1,15 @@
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 
-import { createTrpcRouter } from '../trpc'
+import { createAppRouter } from '../trpc'
 
 import { ideasRouter } from './ideas'
 import { utilsHealthRouter } from './utils'
 
-export const trpcRouter = createTrpcRouter({
+export const appRouter = createAppRouter({
   ideas: ideasRouter,
   utils: utilsHealthRouter,
 })
 
-export type TrpcRouter = typeof trpcRouter
-export type TrpcRouterInput = inferRouterInputs<TrpcRouter>
-export type TrpcRouterOutput = inferRouterOutputs<TrpcRouter>
+export type AppRouter = typeof appRouter
+export type AppRouterInput = inferRouterInputs<AppRouter>
+export type AppRouterOutput = inferRouterOutputs<AppRouter>

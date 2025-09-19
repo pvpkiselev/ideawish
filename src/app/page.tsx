@@ -1,10 +1,12 @@
 import Link from 'next/link'
 
 import AllIdeas from '@/components/ideas/AllIdeas'
-import { serverClient } from '@/lib/trpc/serverClient'
+import { createCaller } from '@/lib/trpc/server/caller'
 
 export default async function Home() {
-  const initialIdeas = await serverClient.ideas.getIdeas({
+  const serverApi = await createCaller()
+
+  const initialIdeas = await serverApi.ideas.getIdeas({
     search: '',
     limit: 10,
   })

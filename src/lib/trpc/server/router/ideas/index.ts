@@ -1,11 +1,11 @@
-import { createTrpcRouter } from '../../trpc'
+import { createAppRouter } from '../../trpc'
 
-import { createIdeaTrpcRoute } from './createIdea'
-import { getIdeaTrpcRoute } from './getIdea'
-import { getIdeasTrpcRoute } from './getIdeas'
+import { createIdeaRoute } from './createIdea'
+import { getIdeaRoute } from './getIdea'
+import { getIdeasRoute } from './getIdeas'
 
-export const ideasRouter = createTrpcRouter({
-  getIdeas: getIdeasTrpcRoute,
-  getIdea: getIdeaTrpcRoute,
-  createIdea: createIdeaTrpcRoute,
+export const ideasRouter = createAppRouter({
+  getIdeas: getIdeasRoute,
+  getIdea: getIdeaRoute,
+  createIdea: createIdeaRoute,
 })

@@ -1,28 +1,28 @@
 import { initTRPC, TRPCError } from '@trpc/server'
 import SuperJSON from 'superjson'
 
-import { getServerContext } from '@/lib/trpc/serverContext'
+import { TRPCContext } from './context'
 
-export const createContext = async () => await getServerContext()
-
-export type TrpcContext = Awaited<ReturnType<typeof createContext>>
-
-const trpc = initTRPC.context<TrpcContext>().create({
+const trpc = initTRPC.context<TRPCContext>().create({
   transformer: SuperJSON,
+  errorFormatter({ shape }) {
+    return shape
+  },
 })
 
 const isAuthed = trpc.middleware(({ next, ctx }) => {
-  if (!ctx.session) {
+  if (!ctx.user) {
     throw new TRPCError({ code: 'UNAUTHORIZED' })
   }
 
   return next({
     ctx: {
-      me: ctx.session.user,
+      ...ctx,
+      user: ctx.user,
     },
   })
 })
 
-export const createTrpcRouter = trpc.router
-export const trpcProcedure = trpc.procedure
+export const createAppRouter = trpc.router
+export const publicProcedure = trpc.procedure
 export const protectedProcedure = trpc.procedure.use(isAuthed)

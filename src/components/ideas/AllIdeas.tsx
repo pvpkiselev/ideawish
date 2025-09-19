@@ -5,10 +5,10 @@ import InfiniteScroll from 'react-infinite-scroller'
 
 import { useLayoutContentRef } from '@/context/LayoutContentRefContext'
 import { trpc } from '@/lib/trpc/client'
-import { TrpcRouterOutput } from '@/lib/trpc/server/router'
+import { AppRouterOutput } from '@/lib/trpc/server/router'
 
 interface AllIdeasProps {
-  initialIdeas: TrpcRouterOutput['ideas']['getIdeas']
+  initialIdeas: AppRouterOutput['ideas']['getIdeas']
 }
 
 export default function AllIdeas({ initialIdeas }: AllIdeasProps) {
@@ -30,9 +30,7 @@ export default function AllIdeas({ initialIdeas }: AllIdeasProps) {
       }
     )
 
-  if (!data || !data.pages[0].ideas.length) {
-    return <div className="text-center">No ideas data available.</div>
-  }
+  const allIdeas = data?.pages.flatMap((page) => page.ideas) ?? []
 
   if (isLoading || isRefetching) {
     return <div className="text-center">Loading ideas...</div>
@@ -42,7 +40,9 @@ export default function AllIdeas({ initialIdeas }: AllIdeasProps) {
     return <div className="text-center text-red-500">Error loading ideas: {error.message}</div>
   }
 
-  const allIdeas = data.pages.flatMap((page) => page.ideas)
+  if (allIdeas.length === 0 && !isFetchingNextPage) {
+    return <div className="text-center">No ideas found.</div>
+  }
 
   return (
     <div className="mb-2 flex max-w-2xl flex-col space-y-4">

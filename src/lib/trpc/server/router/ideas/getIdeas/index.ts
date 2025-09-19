@@ -1,10 +1,10 @@
 import _ from 'lodash'
 
-import { trpcProcedure } from '@/lib/trpc/server/trpc'
+import { publicProcedure } from '../../../trpc'
 
-import { zGetIdeasTrpcInput } from './input'
+import { zGetIdeasInput } from './input'
 
-export const getIdeasTrpcRoute = trpcProcedure.input(zGetIdeasTrpcInput).query(async ({ ctx, input }) => {
+export const getIdeasRoute = publicProcedure.input(zGetIdeasInput).query(async ({ ctx, input }) => {
   const normalizedSearch = input.search ? input.search.trim().replace(/[\s\n\t]/g, '&') : undefined
 
   const rawIdeas = await ctx.prisma.idea.findMany({

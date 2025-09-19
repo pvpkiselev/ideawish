@@ -5,7 +5,7 @@ import { Toaster } from 'sonner'
 
 import LayoutContentWrapper from '@/components/LayoutContentWrapper'
 import MainNavigation from '@/components/MainNavigation'
-import { TRPCProvider } from '@/lib/trpc/TRPCProvider'
+import { TRPCProvider } from '@/lib/trpc/TrpcProvider'
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
